@@ -63,7 +63,7 @@ const factory = (content, resourcePrefix, reducers, id, input, externalEvents, d
     }
 
     if (externalEvents) ExternalEvents.registerEvents(externalEvents)
-    const store = StoreFactory.createStore(initialState, reducers, sagas)
+    const store = StoreFactory.createStore(initialState, reducers, sagas, id)
 
     if (module.hot) {
       module.hot.accept('./modules/reducers', () => {

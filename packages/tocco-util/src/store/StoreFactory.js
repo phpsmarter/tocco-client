@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import input from './input/reducer'
 
 export default class StoreFactory {
-  static createStore = (initialState = {}, reducers, sagas) => {
+  static createStore = (initialState = {}, reducers, sagas, name) => {
     var sagaMiddleware = createSagaMiddleware()
     let middleware = applyMiddleware(thunk, sagaMiddleware)
 
@@ -14,7 +14,7 @@ export default class StoreFactory {
       const devToolsExtension = window.devToolsExtension
 
       if (typeof devToolsExtension === 'function') {
-        middleware = compose(middleware, devToolsExtension())
+        middleware = compose(middleware, devToolsExtension({name}))
       }
     }
 

@@ -5,13 +5,10 @@ function registerEvents(externalEvents) {
 }
 
 function invokeExternalEvent(eventName, ...args) {
-  if (__DEV__) {
-    console.log('would call external event', eventName)
-    return
-  }
-
   if (events[eventName]) {
     events[eventName](...args)
+  } else {
+    console.log(`external event '${eventName}' not found. Provided arguments:`, ...args)
   }
 }
 
