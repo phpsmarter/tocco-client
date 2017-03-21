@@ -66,7 +66,7 @@ export const createEntitiesResponse = (url, opts) => {
       const B = b.paths[fieldName].value.value || 0
       return ((A < B) ? -1 : ((A > B) ? 1 : 0))
     })
-    if (direction === 'desc') {
+    if (direction.toLowerCase() === 'desc') {
       allEntities.reverse()
     }
   }

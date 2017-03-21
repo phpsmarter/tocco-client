@@ -15,6 +15,24 @@ class ListView extends React.Component {
   }
 
   render() {
+    const remoteSort = (pageIndex, obj, ordering) => {
+      const sort = ordering.sort
+      this.props.setOrderBy({
+        name: sort.property,
+        direction: sort.direction
+      })
+
+      // Ugly way to achieve what we want. Actually we just want to change the state (list.orderBy) in order to set the
+      // search term correctly but we need to return a promise here to satisfy the react-redux-grid component. This
+      // will prompt a warning in the js console which is not really a satisfying solution.
+      // It would be ugly as well if we call another function here to return the data by a promise. This should be done
+      // at a single point with the redux-state.
+      // See the implementation: https://github.com/bencripps/react-redux-grid/blob/master/src/actions/GridActions.js
+      return new Promise((resolve, reject) => {
+        resolve({})
+      })
+    }
+
     return (
       <div className="list-view">
         {this.props.showSearchForm && <SearchFormContainer/>}
@@ -25,7 +43,7 @@ class ListView extends React.Component {
           plugins={{
             PAGER: {
               enabled: true,
-              pagingType: 'locale',
+              pagingType: 'local',
               pagerComponent: (
                 <Pagination
                   totalRecords={this.props.entityCount}
@@ -34,6 +52,13 @@ class ListView extends React.Component {
                   currentPage={this.props.currentPage}
                 />
               )
+            },
+            COLUMN_MANAGER: {
+              sortable: {
+                enabled: true,
+                method: 'remote',
+                sortingSource: remoteSort
+              }
             }
           }}
           stateKey="listViewGrid"
