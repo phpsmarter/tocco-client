@@ -2,6 +2,7 @@ import React from 'react'
 import {intlShape} from 'react-intl'
 import {Button, FormattedValue, Pagination, Table} from 'tocco-ui'
 import SearchFormContainer from '../../containers/SearchFormContainer'
+import Test from '../../../../subapps/Test/'
 
 class ListView extends React.Component {
   componentWillMount() {
@@ -36,10 +37,15 @@ class ListView extends React.Component {
 
   msg = id => (this.props.intl.formatMessage({id}))
 
+  onTen = id => console.log(`TestApp ${id} reached 10!`) // eslint-disable-line no-console
+
   render() {
     const props = this.props
     return (
       <div>
+        <Test id="one" initialCount={0} onTen={this.onTen}/>
+        <Test id="two" initialCount={5} onTen={this.onTen}/>
+        <Test id="tree" initialCount={10} onTen={this.onTen}/>
         {props.showSearchForm && <SearchFormContainer/>}
         <div className="list-view">
           <Table
